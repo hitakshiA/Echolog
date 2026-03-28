@@ -34,6 +34,8 @@ def create_app(config_name: str | None = None) -> Flask:
 
 
 def _register_blueprints(app: Flask) -> None:
+    from app.api.analysis.routes import analysis_bp
     from app.api.feedback.routes import feedback_bp
 
     app.register_blueprint(feedback_bp, url_prefix="/api/feedback")
+    app.register_blueprint(analysis_bp, url_prefix="/api/analysis")

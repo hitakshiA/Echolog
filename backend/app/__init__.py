@@ -3,6 +3,7 @@ import time
 
 from dotenv import load_dotenv
 from flask import Flask
+from flask_cors import CORS
 from sqlalchemy import text
 
 from app.common.error_handlers import register_error_handlers
@@ -27,6 +28,7 @@ def create_app(config_name: str | None = None) -> Flask:
 
     db.init_app(app)
     migrate.init_app(app, db)
+    CORS(app)
 
     with app.app_context():
         from app.domain import models  # noqa: F401

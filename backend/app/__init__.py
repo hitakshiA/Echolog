@@ -3,12 +3,16 @@ import os
 from dotenv import load_dotenv
 from flask import Flask
 
+from app.common.error_handlers import register_error_handlers
+from app.common.logging import configure_logging
+from app.common.middleware import register_middleware
 from app.config import config_map
 from app.extensions import db, migrate
 
 
 def create_app(config_name: str | None = None) -> Flask:
     load_dotenv()
+    configure_logging()
 
     if config_name is None:
         config_name = os.getenv("FLASK_ENV", "development")
@@ -22,6 +26,8 @@ def create_app(config_name: str | None = None) -> Flask:
     with app.app_context():
         from app.domain import models  # noqa: F401
 
+    register_error_handlers(app)
+    register_middleware(app)
     _register_blueprints(app)
 
     return app

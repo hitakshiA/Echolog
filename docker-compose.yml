@@ -1,23 +1,21 @@
 services:
   backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
+    build: ./backend
     ports:
       - "5000:5000"
     environment:
       - FLASK_ENV=development
+      - FLASK_APP=app:create_app
       - DATABASE_URL=sqlite:///echolog.db
       - OPENAI_API_KEY=${OPENAI_API_KEY:-your-key-here}
       - ECHOLOG_LLM_PROVIDER=${ECHOLOG_LLM_PROVIDER:-openai}
+      - SECRET_KEY=docker-dev-secret
     volumes:
       - ./backend:/app
       - backend-data:/app/instance
 
   frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
+    build: ./frontend
     ports:
       - "5173:5173"
     environment:

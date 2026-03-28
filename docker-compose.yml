@@ -1,0 +1,31 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_ENV=development
+      - DATABASE_URL=sqlite:///echolog.db
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-your-key-here}
+      - ECHOLOG_LLM_PROVIDER=${ECHOLOG_LLM_PROVIDER:-openai}
+    volumes:
+      - ./backend:/app
+      - backend-data:/app/instance
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_URL=http://backend:5000
+    volumes:
+      - ./frontend/src:/app/src
+    depends_on:
+      - backend
+
+volumes:
+  backend-data:

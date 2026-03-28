@@ -23,3 +23,7 @@ class LLMError(Exception):
     def __init__(self, message: str, provider: str | None = None):
         self.provider = provider
         super().__init__(message)
+
+
+class LLMConfigError(Exception):
+    pass

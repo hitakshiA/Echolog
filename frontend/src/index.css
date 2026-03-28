@@ -3,16 +3,22 @@
 @theme {
   --font-sans: "Inter", system-ui, -apple-system, sans-serif;
 
-  --color-bg: #F8FAFC;
+  --color-bg: #FAFBFC;
   --color-surface: #FFFFFF;
-  --color-border: #E2E8F0;
-  --color-text: #0F172A;
-  --color-text-secondary: #64748B;
-  --color-accent: #3B82F6;
-  --color-accent-hover: #2563EB;
+  --color-surface-hover: #F7F8FA;
+  --color-border: #E8ECF0;
+  --color-border-light: #F0F2F5;
+  --color-text: #1A1D26;
+  --color-text-secondary: #6B7280;
+  --color-text-muted: #9CA3AF;
+  --color-accent: #6366F1;
+  --color-accent-hover: #4F46E5;
+  --color-accent-light: #EEF2FF;
   --color-danger: #EF4444;
   --color-success: #10B981;
+  --color-success-light: #ECFDF5;
   --color-warning: #F59E0B;
+  --color-warning-light: #FFFBEB;
 }
 
 body {
@@ -22,6 +28,8 @@ body {
   color: var(--color-text);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-size: 14px;
+  line-height: 1.6;
 }
 
 #root {
@@ -31,4 +39,9 @@ body {
 *:focus-visible {
   outline: 2px solid var(--color-accent);
   outline-offset: 2px;
+}
+
+::selection {
+  background-color: var(--color-accent-light);
+  color: var(--color-accent);
 }

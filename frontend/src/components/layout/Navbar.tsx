@@ -9,12 +9,21 @@ export function Navbar() {
   const location = useLocation()
 
   return (
-    <nav className="border-b border-border bg-surface">
+    <nav className="sticky top-0 z-40 border-b border-border bg-surface/80 backdrop-blur-lg">
       <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-6">
-        <Link to="/" className="text-lg font-bold tracking-tight text-text no-underline">
-          EchoLog
+        <Link to="/" className="flex items-center gap-2.5 no-underline">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-accent to-purple-500 shadow-sm">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M12 2L2 7l10 5 10-5-10-5z" />
+              <path d="M2 17l10 5 10-5" />
+              <path d="M2 12l10 5 10-5" />
+            </svg>
+          </div>
+          <span className="text-lg font-bold tracking-tight text-text">
+            EchoLog
+          </span>
         </Link>
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-1 rounded-full bg-bg p-1">
           {navLinks.map((link) => {
             const isActive =
               link.to === '/'
@@ -24,10 +33,10 @@ export function Navbar() {
               <Link
                 key={link.to}
                 to={link.to}
-                className={`rounded-md px-3 py-1.5 text-sm font-medium no-underline transition-colors ${
+                className={`rounded-full px-4 py-1.5 text-sm font-medium no-underline transition-all duration-200 ${
                   isActive
-                    ? 'bg-accent/10 text-accent'
-                    : 'text-text-secondary hover:text-text hover:bg-slate-100'
+                    ? 'bg-surface text-text shadow-sm'
+                    : 'text-text-secondary hover:text-text'
                 }`}
               >
                 {link.label}

@@ -49,12 +49,17 @@ export function DashboardPage() {
     <div className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-semibold text-text">Dashboard</h1>
-          <p className="text-sm text-text-secondary">
+          <h1 className="text-2xl font-bold tracking-tight text-text">Dashboard</h1>
+          <p className="mt-0.5 text-sm text-text-muted">
             Manage and triage customer feedback
           </p>
         </div>
-        <Button onClick={() => setIsModalOpen(true)}>Add Feedback</Button>
+        <Button onClick={() => setIsModalOpen(true)}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" />
+          </svg>
+          Add Feedback
+        </Button>
       </div>
 
       <StatsBar data={data} isLoading={isLoading} />

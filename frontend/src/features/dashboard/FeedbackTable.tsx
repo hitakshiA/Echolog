@@ -8,12 +8,12 @@ interface FeedbackTableProps {
   isLoading: boolean
 }
 
-const urgencyColor: Record<number, string> = {
-  1: 'text-slate-500',
-  2: 'text-blue-500',
-  3: 'text-amber-500',
-  4: 'text-orange-500',
-  5: 'text-red-600 font-bold',
+const urgencyColors: Record<number, string> = {
+  1: 'bg-slate-300',
+  2: 'bg-blue-400',
+  3: 'bg-amber-400',
+  4: 'bg-orange-500',
+  5: 'bg-red-500',
 }
 
 const sourceLabels: Record<string, string> = {
@@ -50,8 +50,8 @@ export function FeedbackTable({ items, isLoading }: FeedbackTableProps) {
   if (isLoading) {
     return (
       <div className="space-y-2">
-        {[1, 2, 3].map((i) => (
-          <div key={i} className="h-12 animate-pulse rounded-md bg-slate-100" />
+        {[1, 2, 3, 4].map((i) => (
+          <div key={i} className="h-14 animate-pulse rounded-xl bg-border-light" />
         ))}
       </div>
     )
@@ -59,75 +59,87 @@ export function FeedbackTable({ items, isLoading }: FeedbackTableProps) {
 
   if (items.length === 0) {
     return (
-      <div className="rounded-lg border border-border bg-surface py-12 text-center text-sm text-text-secondary">
-        No feedback items found. Add some feedback to get started.
+      <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-border bg-surface py-16 text-center">
+        <div className="mb-3 text-4xl">💬</div>
+        <p className="text-sm font-medium text-text">No feedback items found</p>
+        <p className="mt-1 text-xs text-text-muted">Add some feedback to get started</p>
       </div>
     )
   }
 
   return (
-    <div className="overflow-x-auto rounded-lg border border-border bg-surface">
+    <div className="overflow-hidden rounded-xl border border-border bg-surface shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
       <table className="w-full text-left text-sm">
-        <thead className="border-b border-border bg-slate-50">
-          <tr>
-            <th className="px-4 py-3 font-medium text-text-secondary">Content</th>
-            <th className="px-4 py-3 font-medium text-text-secondary">Source</th>
-            <th className="px-4 py-3 font-medium text-text-secondary">Sentiment</th>
-            <th className="px-4 py-3 font-medium text-text-secondary">Category</th>
-            <th className="px-4 py-3 font-medium text-text-secondary">Urgency</th>
-            <th className="px-4 py-3 font-medium text-text-secondary">Status</th>
-            <th className="px-4 py-3 font-medium text-text-secondary">Date</th>
+        <thead>
+          <tr className="border-b border-border bg-bg">
+            <th className="px-5 py-3 text-xs font-semibold uppercase tracking-wider text-text-muted">Content</th>
+            <th className="px-5 py-3 text-xs font-semibold uppercase tracking-wider text-text-muted">Source</th>
+            <th className="px-5 py-3 text-xs font-semibold uppercase tracking-wider text-text-muted">Sentiment</th>
+            <th className="px-5 py-3 text-xs font-semibold uppercase tracking-wider text-text-muted">Category</th>
+            <th className="px-5 py-3 text-xs font-semibold uppercase tracking-wider text-text-muted">Urgency</th>
+            <th className="px-5 py-3 text-xs font-semibold uppercase tracking-wider text-text-muted">Status</th>
+            <th className="px-5 py-3 text-xs font-semibold uppercase tracking-wider text-text-muted">Date</th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-border">
-          {items.map((item) => (
+        <tbody>
+          {items.map((item, idx) => (
             <tr
               key={item.id}
-              className="cursor-pointer hover:bg-slate-50 transition-colors"
+              className={`cursor-pointer transition-colors hover:bg-surface-hover ${idx < items.length - 1 ? 'border-b border-border-light' : ''}`}
               onClick={() => void navigate(`/feedback/${item.id}`)}
             >
-              <td className="max-w-xs truncate px-4 py-3 text-text">
-                {item.content.length > 100
-                  ? `${item.content.slice(0, 100)}...`
+              <td className="max-w-xs truncate px-5 py-3.5 font-medium text-text">
+                {item.content.length > 80
+                  ? `${item.content.slice(0, 80)}...`
                   : item.content}
               </td>
-              <td className="px-4 py-3 text-text-secondary">
+              <td className="px-5 py-3.5 text-text-secondary">
                 {item.source ? sourceLabels[item.source] ?? item.source : '—'}
               </td>
-              <td className="px-4 py-3">
+              <td className="px-5 py-3.5">
                 {item.latest_analysis ? (
                   <Badge variant={sentimentVariant(item.latest_analysis.sentiment)}>
                     {item.latest_analysis.sentiment}
                   </Badge>
                 ) : (
-                  <span className="text-text-secondary">—</span>
+                  <span className="text-text-muted">—</span>
                 )}
               </td>
-              <td className="px-4 py-3">
+              <td className="px-5 py-3.5">
                 {item.latest_analysis ? (
                   <Badge variant="default">
-                    {categoryLabels[item.latest_analysis.category] ??
-                      item.latest_analysis.category}
+                    {categoryLabels[item.latest_analysis.category] ?? item.latest_analysis.category}
                   </Badge>
                 ) : (
-                  <span className="text-text-secondary">—</span>
+                  <span className="text-text-muted">—</span>
                 )}
               </td>
-              <td className="px-4 py-3">
+              <td className="px-5 py-3.5">
                 {item.latest_analysis ? (
-                  <span className={urgencyColor[item.latest_analysis.urgency] ?? ''}>
-                    {item.latest_analysis.urgency}
-                  </span>
+                  <div className="flex items-center gap-2">
+                    <div className="flex gap-0.5">
+                      {[1, 2, 3, 4, 5].map((level) => (
+                        <div
+                          key={level}
+                          className={`h-1.5 w-3 rounded-full ${
+                            level <= item.latest_analysis!.urgency
+                              ? urgencyColors[item.latest_analysis!.urgency]
+                              : 'bg-slate-200'
+                          }`}
+                        />
+                      ))}
+                    </div>
+                  </div>
                 ) : (
-                  <span className="text-text-secondary">—</span>
+                  <span className="text-text-muted">—</span>
                 )}
               </td>
-              <td className="px-4 py-3">
+              <td className="px-5 py-3.5">
                 <Badge variant={statusVariant(item.status)}>
                   {statusLabels[item.status] ?? item.status}
                 </Badge>
               </td>
-              <td className="whitespace-nowrap px-4 py-3 text-text-secondary">
+              <td className="whitespace-nowrap px-5 py-3.5 text-text-muted">
                 {new Date(item.created_at).toLocaleDateString()}
               </td>
             </tr>

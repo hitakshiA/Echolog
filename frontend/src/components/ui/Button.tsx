@@ -9,13 +9,13 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const variantStyles: Record<ButtonVariant, string> = {
   primary:
-    'bg-accent text-white hover:bg-accent-hover shadow-sm',
+    'bg-gradient-to-b from-accent to-accent-hover text-white shadow-[0_1px_3px_rgba(99,102,241,0.4)] hover:shadow-[0_2px_8px_rgba(99,102,241,0.4)] active:scale-[0.98]',
   secondary:
-    'bg-surface text-text border border-border hover:bg-slate-50',
+    'bg-surface text-text border border-border hover:bg-surface-hover hover:border-border shadow-[0_1px_2px_rgba(0,0,0,0.04)]',
   danger:
-    'bg-danger text-white hover:bg-red-600 shadow-sm',
+    'bg-gradient-to-b from-danger to-red-600 text-white shadow-[0_1px_3px_rgba(239,68,68,0.4)]',
   ghost:
-    'text-text-secondary hover:text-text hover:bg-slate-100',
+    'text-text-secondary hover:text-text hover:bg-surface-hover',
 }
 
 export function Button({
@@ -26,7 +26,7 @@ export function Button({
 }: ButtonProps) {
   return (
     <button
-      className={`inline-flex items-center justify-center gap-2 rounded-md px-3 py-1.5 text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:opacity-50 disabled:cursor-not-allowed ${variantStyles[variant]} ${className}`}
+      className={`inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-all duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100 ${variantStyles[variant]} ${className}`}
       {...props}
     >
       {children}

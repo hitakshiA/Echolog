@@ -37,7 +37,7 @@ const sentimentOptions = [
 
 export function FilterBar({ filters, onFilterChange }: FilterBarProps) {
   return (
-    <div className="flex flex-wrap items-end gap-3">
+    <div className="flex flex-wrap items-end gap-3 rounded-xl border border-border bg-surface p-4 shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
       <Select
         label="Status"
         options={statusOptions}
@@ -77,14 +77,16 @@ export function FilterBar({ filters, onFilterChange }: FilterBarProps) {
           } as FeedbackFilters)
         }
       />
-      <Input
-        label="Search"
-        placeholder="Search feedback..."
-        value={filters.search ?? ''}
-        onChange={(e) =>
-          onFilterChange({ ...filters, search: e.target.value || undefined, page: 1 })
-        }
-      />
+      <div className="flex-1">
+        <Input
+          label="Search"
+          placeholder="Search feedback..."
+          value={filters.search ?? ''}
+          onChange={(e) =>
+            onFilterChange({ ...filters, search: e.target.value || undefined, page: 1 })
+          }
+        />
+      </div>
       <Button
         variant="ghost"
         onClick={() =>
@@ -93,8 +95,13 @@ export function FilterBar({ filters, onFilterChange }: FilterBarProps) {
             sort_order: filters.sort_order === 'desc' ? 'asc' : 'desc',
           })
         }
+        className="shrink-0"
       >
-        {filters.sort_order === 'asc' ? 'Oldest first' : 'Newest first'}
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M11 5h10" /><path d="M11 9h7" /><path d="M11 13h4" />
+          <path d="M3 17l3 3 3-3" /><path d="M6 18V4" />
+        </svg>
+        {filters.sort_order === 'asc' ? 'Oldest' : 'Newest'}
       </Button>
     </div>
   )

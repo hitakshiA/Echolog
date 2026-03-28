@@ -9,21 +9,15 @@ export function Navbar() {
   const location = useLocation()
 
   return (
-    <nav className="sticky top-0 z-40 border-b border-border bg-surface/80 backdrop-blur-lg">
-      <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-6">
-        <Link to="/" className="flex items-center gap-2.5 no-underline">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-accent to-purple-500 shadow-sm">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M12 2L2 7l10 5 10-5-10-5z" />
-              <path d="M2 17l10 5 10-5" />
-              <path d="M2 12l10 5 10-5" />
-            </svg>
+    <nav className="border-b border-border bg-white">
+      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-8">
+        <Link to="/" className="flex items-center gap-3 no-underline">
+          <div className="flex h-9 w-9 items-center justify-center rounded-full bg-accent">
+            <span className="text-base font-bold text-white">E</span>
           </div>
-          <span className="text-lg font-bold tracking-tight text-text">
-            EchoLog
-          </span>
+          <span className="text-[17px] font-semibold text-text">EchoLog</span>
         </Link>
-        <div className="flex items-center gap-1 rounded-full bg-bg p-1">
+        <div className="flex items-center gap-6">
           {navLinks.map((link) => {
             const isActive =
               link.to === '/'
@@ -33,13 +27,16 @@ export function Navbar() {
               <Link
                 key={link.to}
                 to={link.to}
-                className={`rounded-full px-4 py-1.5 text-sm font-medium no-underline transition-all duration-200 ${
+                className={`relative text-sm font-medium no-underline transition-colors ${
                   isActive
-                    ? 'bg-surface text-text shadow-sm'
-                    : 'text-text-secondary hover:text-text'
+                    ? 'text-text'
+                    : 'text-text-muted hover:text-text'
                 }`}
               >
                 {link.label}
+                {isActive && (
+                  <span className="absolute -bottom-[21px] left-0 right-0 h-[2px] rounded-full bg-accent" />
+                )}
               </Link>
             )
           })}

@@ -24,18 +24,18 @@ describe('Button', () => {
   it('renders primary variant by default', () => {
     render(<Button>Primary</Button>)
     const btn = screen.getByText('Primary')
-    expect(btn.className).toContain('from-accent')
+    expect(btn.className).toContain('bg-accent')
   })
 
   it('renders secondary variant', () => {
     render(<Button variant="secondary">Secondary</Button>)
     const btn = screen.getByText('Secondary')
-    expect(btn.className).toContain('bg-surface')
+    expect(btn.className).toContain('bg-white')
   })
 
   it('renders danger variant', () => {
     render(<Button variant="danger">Danger</Button>)
     const btn = screen.getByText('Danger')
-    expect(btn.className).toContain('from-danger')
+    expect(btn.className).toContain('bg-danger')
   })
 })

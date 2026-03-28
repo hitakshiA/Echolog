@@ -1,6 +1,5 @@
 import { Select } from '../../components/ui/Select'
 import { Input } from '../../components/ui/Input'
-import { Button } from '../../components/ui/Button'
 import type { FeedbackFilters } from '../../types'
 
 interface FilterBarProps {
@@ -37,44 +36,32 @@ const sentimentOptions = [
 
 export function FilterBar({ filters, onFilterChange }: FilterBarProps) {
   return (
-    <div className="flex flex-wrap items-end gap-3 rounded-xl border border-border bg-surface p-4 shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
+    <div className="flex items-end gap-3">
       <Select
         label="Status"
         options={statusOptions}
-        placeholder="All"
+        placeholder="All statuses"
         value={filters.status ?? ''}
         onChange={(e) =>
-          onFilterChange({
-            ...filters,
-            status: e.target.value || undefined,
-            page: 1,
-          } as FeedbackFilters)
+          onFilterChange({ ...filters, status: e.target.value || undefined, page: 1 } as FeedbackFilters)
         }
       />
       <Select
         label="Category"
         options={categoryOptions}
-        placeholder="All"
+        placeholder="All categories"
         value={filters.category ?? ''}
         onChange={(e) =>
-          onFilterChange({
-            ...filters,
-            category: e.target.value || undefined,
-            page: 1,
-          } as FeedbackFilters)
+          onFilterChange({ ...filters, category: e.target.value || undefined, page: 1 } as FeedbackFilters)
         }
       />
       <Select
         label="Sentiment"
         options={sentimentOptions}
-        placeholder="All"
+        placeholder="All sentiments"
         value={filters.sentiment ?? ''}
         onChange={(e) =>
-          onFilterChange({
-            ...filters,
-            sentiment: e.target.value || undefined,
-            page: 1,
-          } as FeedbackFilters)
+          onFilterChange({ ...filters, sentiment: e.target.value || undefined, page: 1 } as FeedbackFilters)
         }
       />
       <div className="flex-1">
@@ -87,22 +74,18 @@ export function FilterBar({ filters, onFilterChange }: FilterBarProps) {
           }
         />
       </div>
-      <Button
-        variant="ghost"
+      <button
         onClick={() =>
-          onFilterChange({
-            ...filters,
-            sort_order: filters.sort_order === 'desc' ? 'asc' : 'desc',
-          })
+          onFilterChange({ ...filters, sort_order: filters.sort_order === 'desc' ? 'asc' : 'desc' })
         }
-        className="shrink-0"
+        className="flex h-[38px] items-center gap-1.5 rounded-lg border border-border px-3 text-sm text-text-secondary transition-colors hover:bg-surface-alt"
       >
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M11 5h10" /><path d="M11 9h7" /><path d="M11 13h4" />
           <path d="M3 17l3 3 3-3" /><path d="M6 18V4" />
         </svg>
         {filters.sort_order === 'asc' ? 'Oldest' : 'Newest'}
-      </Button>
+      </button>
     </div>
   )
 }

@@ -1,4 +1,3 @@
-import { Card } from '../../components/ui/Card'
 import type { PaginatedFeedbackResponse } from '../../types'
 
 interface StatsBarProps {
@@ -9,26 +8,18 @@ interface StatsBarProps {
 interface StatCardProps {
   label: string
   count: number
-  total: number
-  icon: string
   color: string
+  borderColor: string
 }
 
-function StatCard({ label, count, total, icon, color }: StatCardProps) {
-  const pct = total > 0 ? Math.round((count / total) * 100) : 0
+function StatCard({ label, count, color, borderColor }: StatCardProps) {
   return (
-    <Card className="flex items-start gap-4 p-5">
-      <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${color} text-lg`}>
-        {icon}
+    <div className={`flex items-center gap-4 rounded-xl border border-border bg-white p-5 ${borderColor}`} style={{ borderLeftWidth: '3px' }}>
+      <div>
+        <p className="text-sm text-text-muted">{label}</p>
+        <p className={`text-2xl font-bold ${color}`}>{count}</p>
       </div>
-      <div className="flex flex-col">
-        <span className="text-xs font-medium uppercase tracking-wider text-text-muted">{label}</span>
-        <div className="flex items-baseline gap-2">
-          <span className="text-2xl font-bold text-text">{count}</span>
-          <span className="text-xs text-text-muted">{pct}%</span>
-        </div>
-      </div>
-    </Card>
+    </div>
   )
 }
 
@@ -37,7 +28,7 @@ export function StatsBar({ data, isLoading }: StatsBarProps) {
     return (
       <div className="grid grid-cols-4 gap-4">
         {[1, 2, 3, 4].map((i) => (
-          <Card key={i} className="h-[88px] animate-pulse !bg-border-light" />
+          <div key={i} className="h-20 animate-pulse rounded-xl bg-surface-alt" />
         ))}
       </div>
     )
@@ -51,10 +42,10 @@ export function StatsBar({ data, isLoading }: StatsBarProps) {
 
   return (
     <div className="grid grid-cols-4 gap-4">
-      <StatCard label="Total" count={total} total={total} icon="📋" color="bg-indigo-50" />
-      <StatCard label="Pending" count={pendingTriage} total={total} icon="⏳" color="bg-amber-50" />
-      <StatCard label="In Progress" count={inProgress} total={total} icon="🔄" color="bg-blue-50" />
-      <StatCard label="Resolved" count={resolved} total={total} icon="✅" color="bg-emerald-50" />
+      <StatCard label="Total Feedback" count={total} color="text-text" borderColor="!border-l-violet-500" />
+      <StatCard label="Pending Triage" count={pendingTriage} color="text-orange" borderColor="!border-l-orange" />
+      <StatCard label="In Progress" count={inProgress} color="text-blue" borderColor="!border-l-blue" />
+      <StatCard label="Resolved" count={resolved} color="text-green" borderColor="!border-l-green" />
     </div>
   )
 }

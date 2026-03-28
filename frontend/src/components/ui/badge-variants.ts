@@ -23,7 +23,7 @@ export function statusVariant(status: string): BadgeVariant {
     analyzing: 'warning',
     analyzed: 'success',
     analysis_failed: 'danger',
-    in_progress: 'warning',
+    in_progress: 'info',
     resolved: 'success',
     dismissed: 'neutral',
   }

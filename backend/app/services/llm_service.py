@@ -27,6 +27,8 @@ COST_MAP = {
 
 
 class LLMService:
+    """Abstracts LLM provider calls (OpenAI/Anthropic) with retry and logging."""
+
     def __init__(self):
         self.provider = os.getenv("ECHOLOG_LLM_PROVIDER", "openai")
         self._validate_config()

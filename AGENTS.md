@@ -45,10 +45,14 @@ backend/
       middleware.py
       logging.py
   tests/
+    conftest.py          # App factory fixture, mock_llm fixture
+    factories.py         # factory-boy factories for test data
     unit/
+      test_validation_service.py
+      test_state_machine.py
     integration/
-    conftest.py
-    factories.py
+      test_feedback_api.py
+      test_analysis_api.py
 frontend/
   src/
     api/               # Fetch wrapper + TanStack Query hooks

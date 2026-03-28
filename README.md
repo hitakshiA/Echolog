@@ -11,21 +11,26 @@ EchoLog helps product teams collect, analyze, and act on customer feedback. Past
 git clone https://github.com/hitakshiA/Echolog.git
 cd Echolog
 
-# Backend
+# Environment setup
+cp .env.example .env
+# Edit .env and set OPENAI_API_KEY to your real key
+
+# Backend (Terminal 1)
 cd backend
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -e ".[dev]"
+export FLASK_APP=app:create_app
 flask db upgrade
 flask run --debug
 
-# Frontend (new terminal)
+# Frontend (Terminal 2)
 cd frontend
 npm install
 npm run dev
 ```
 
-Open http://localhost:5173 to use the app.
+Open http://localhost:5173. Both servers must be running simultaneously — the frontend proxies API requests to the backend via Vite.
 
 ## How It Works
 

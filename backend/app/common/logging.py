@@ -5,6 +5,7 @@ import structlog
 
 
 def configure_logging() -> None:
+    """Configure structlog with JSON output in production, console in development."""
     env = os.getenv("FLASK_ENV", "development")
 
     if env == "production":

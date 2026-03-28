@@ -2,9 +2,9 @@ import structlog
 from sqlalchemy.orm import Session
 
 from app.domain.enums import FeedbackStatus
-from app.domain.errors import LLMError, NotFoundError
+from app.domain.errors import InvalidStatusTransitionError, LLMError, NotFoundError
 from app.domain.models import Analysis, FeedbackItem
-from app.domain.state_machine import is_valid_transition
+from app.domain.state_machine import get_allowed_transitions, is_valid_transition
 from app.services.llm_service import LLMService
 from app.services.validation_service import ANALYSIS_SYSTEM_PROMPT, validate_llm_response
 
@@ -12,20 +12,20 @@ logger = structlog.get_logger()
 
 
 class AnalysisService:
+    """Orchestrates the AI analysis pipeline for feedback items."""
+
     def __init__(self, session: Session, llm_service: LLMService):
         self.session = session
         self.llm_service = llm_service
 
     def analyze(self, feedback_item_id: int) -> Analysis:
+        """Run LLM analysis on a feedback item, validate output, and save results."""
         item = self.session.get(FeedbackItem, feedback_item_id)
         if not item:
             raise NotFoundError("FeedbackItem", feedback_item_id)
 
         current_status = FeedbackStatus(item.status)
         if not is_valid_transition(current_status, FeedbackStatus.ANALYZING):
-            from app.domain.errors import InvalidStatusTransitionError
-            from app.domain.state_machine import get_allowed_transitions
-
             raise InvalidStatusTransitionError(
                 current=current_status.value,
                 requested=FeedbackStatus.ANALYZING.value,
@@ -136,12 +136,14 @@ class AnalysisService:
         return analysis
 
     def get_latest(self, feedback_item_id: int) -> Analysis | None:
+        """Return the most recent analysis for a feedback item."""
         item = self.session.get(FeedbackItem, feedback_item_id)
         if not item:
             raise NotFoundError("FeedbackItem", feedback_item_id)
         return item.latest_analysis
 
     def get_history(self, feedback_item_id: int) -> list[Analysis]:
+        """Return all analyses for a feedback item, newest first."""
         item = self.session.get(FeedbackItem, feedback_item_id)
         if not item:
             raise NotFoundError("FeedbackItem", feedback_item_id)

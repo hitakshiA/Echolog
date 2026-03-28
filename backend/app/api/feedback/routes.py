@@ -2,6 +2,7 @@ from flask import Blueprint, request
 from pydantic import ValidationError
 
 from app.domain.errors import InvalidStatusTransitionError, NotFoundError
+from app.domain.models import FeedbackItem
 from app.extensions import db
 from app.schemas.analysis import AnalysisResponse
 from app.schemas.feedback import (
@@ -21,7 +22,7 @@ def _service() -> FeedbackService:
     return FeedbackService(db.session)
 
 
-def _serialize_item(item) -> dict:
+def _serialize_item(item: FeedbackItem) -> dict:
     latest = None
     if item.latest_analysis:
         a = item.latest_analysis

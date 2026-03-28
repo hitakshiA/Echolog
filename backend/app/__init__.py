@@ -15,6 +15,7 @@ _start_time = time.time()
 
 
 def create_app(config_name: str | None = None) -> Flask:
+    """Application factory: creates and configures the Flask app."""
     load_dotenv()
     configure_logging()
 

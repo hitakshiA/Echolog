@@ -11,10 +11,13 @@ from app.schemas.feedback import FeedbackFilters
 
 
 class FeedbackService:
+    """Handles all feedback item CRUD operations and status transitions."""
+
     def __init__(self, session: Session):
         self.session = session
 
     def create(self, content: str, source: FeedbackSource | None = None) -> FeedbackItem:
+        """Create a new feedback item with status 'new'."""
         item = FeedbackItem(content=content, source=source, status=FeedbackStatus.NEW)
         self.session.add(item)
         self.session.commit()

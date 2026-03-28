@@ -15,7 +15,7 @@ from app.services.llm_service import LLMService
 analysis_bp = Blueprint("analysis", __name__)
 
 
-def _serialize_analysis(a) -> dict:
+def _serialize_analysis(a: Analysis) -> dict:
     return AnalysisResponse(
         id=a.id,
         sentiment=a.sentiment,

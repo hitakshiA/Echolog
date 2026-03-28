@@ -4,6 +4,8 @@
 
 EchoLog helps product teams collect, analyze, and act on customer feedback. Paste raw feedback, click Analyze, and get structured insights in seconds: sentiment, category, urgency, themes, and suggested actions. Every analysis is validated, logged, and traceable.
 
+**Live Demo**: [http://143.198.181.116](http://143.198.181.116)
+
 ## Quick Start
 
 ```bash

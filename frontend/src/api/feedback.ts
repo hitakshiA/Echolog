@@ -5,31 +5,23 @@ import type {
   PaginatedFeedbackResponse,
 } from '../types'
 import type { CreateFeedbackInput, UpdateNoteInput, UpdateStatusInput } from '../schemas/feedback'
-import { apiClient } from './client'
+import * as store from '../store'
 
 export function useFeedbackList(filters: FeedbackFilters) {
-  const params: Record<string, string> = {}
-  if (filters.status) params.status = filters.status
-  if (filters.category) params.category = filters.category
-  if (filters.sentiment) params.sentiment = filters.sentiment
-  if (filters.urgency_min !== undefined) params.urgency_min = String(filters.urgency_min)
-  if (filters.urgency_max !== undefined) params.urgency_max = String(filters.urgency_max)
-  if (filters.search) params.search = filters.search
-  if (filters.sort_by) params.sort_by = filters.sort_by
-  if (filters.sort_order) params.sort_order = filters.sort_order
-  if (filters.page) params.page = String(filters.page)
-  if (filters.per_page) params.per_page = String(filters.per_page)
-
   return useQuery({
     queryKey: ['feedback', filters],
-    queryFn: () => apiClient.get<PaginatedFeedbackResponse>('/feedback', params),
+    queryFn: () => store.listFeedback(filters) as PaginatedFeedbackResponse,
   })
 }
 
 export function useFeedbackDetail(id: number) {
   return useQuery({
     queryKey: ['feedback', id],
-    queryFn: () => apiClient.get<FeedbackItem>(`/feedback/${id}`),
+    queryFn: () => {
+      const item = store.getFeedback(id)
+      if (!item) throw new Error(`Feedback item ${id} not found`)
+      return item as FeedbackItem
+    },
     enabled: id > 0,
   })
 }
@@ -37,19 +29,10 @@ export function useFeedbackDetail(id: number) {
 export function useCreateFeedback() {
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: (data: CreateFeedbackInput) =>
-      apiClient.post<FeedbackItem>('/feedback', data),
-    onSuccess: () => {
-      void queryClient.invalidateQueries({ queryKey: ['feedback'] })
+    mutationFn: (data: CreateFeedbackInput) => {
+      const item = store.createFeedback(data.content, data.source ?? null)
+      return Promise.resolve(item as FeedbackItem)
     },
-  })
-}
-
-export function useBulkCreateFeedback() {
-  const queryClient = useQueryClient()
-  return useMutation({
-    mutationFn: (items: CreateFeedbackInput[]) =>
-      apiClient.post<FeedbackItem[]>('/feedback/bulk', { items }),
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: ['feedback'] })
     },
@@ -59,8 +42,10 @@ export function useBulkCreateFeedback() {
 export function useUpdateStatus(id: number) {
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: (data: UpdateStatusInput) =>
-      apiClient.patch<FeedbackItem>(`/feedback/${id}/status`, data),
+    mutationFn: (data: UpdateStatusInput) => {
+      const item = store.updateStatus(id, data.status)
+      return Promise.resolve(item as FeedbackItem)
+    },
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: ['feedback', id] })
       void queryClient.invalidateQueries({ queryKey: ['feedback'] })
@@ -71,8 +56,10 @@ export function useUpdateStatus(id: number) {
 export function useUpdateNote(id: number) {
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: (data: UpdateNoteInput) =>
-      apiClient.patch<FeedbackItem>(`/feedback/${id}/note`, data),
+    mutationFn: (data: UpdateNoteInput) => {
+      const item = store.updateNote(id, data.note)
+      return Promise.resolve(item as FeedbackItem)
+    },
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: ['feedback', id] })
     },
@@ -82,7 +69,10 @@ export function useUpdateNote(id: number) {
 export function useDeleteFeedback() {
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: (id: number) => apiClient.delete(`/feedback/${id}`),
+    mutationFn: (id: number) => {
+      store.deleteFeedback(id)
+      return Promise.resolve()
+    },
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: ['feedback'] })
     },

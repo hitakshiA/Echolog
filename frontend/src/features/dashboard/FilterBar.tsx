@@ -78,7 +78,7 @@ export function FilterBar({ filters, onFilterChange }: FilterBarProps) {
         onClick={() =>
           onFilterChange({ ...filters, sort_order: filters.sort_order === 'desc' ? 'asc' : 'desc' })
         }
-        className="flex h-[38px] items-center gap-1.5 rounded-lg border border-border px-3 text-sm text-text-secondary transition-colors hover:bg-surface-alt"
+        className="flex h-[38px] items-center gap-1.5 rounded-lg border border-border bg-surface px-3 text-[13px] text-text-secondary transition-all duration-200 hover:bg-surface-alt"
       >
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M11 5h10" /><path d="M11 9h7" /><path d="M11 13h4" />

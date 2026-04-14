@@ -30,7 +30,7 @@ export function AddFeedbackModal({ isOpen, onClose }: AddFeedbackModalProps) {
     reset,
     formState: { errors },
   } = useForm<CreateFeedbackInput>({
-    resolver: zodResolver(createFeedbackSchema),
+    resolver: zodResolver(createFeedbackSchema) as never,
     defaultValues: { content: '', source: null },
   })
 
@@ -45,7 +45,7 @@ export function AddFeedbackModal({ isOpen, onClose }: AddFeedbackModalProps) {
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Add Feedback">
-      <form onSubmit={(e) => void handleSubmit(onSubmit)(e)} className="flex flex-col gap-4">
+      <form onSubmit={(e) => void handleSubmit(onSubmit as never)(e)} className="flex flex-col gap-4">
         <Textarea
           label="Feedback Content"
           placeholder="Paste customer feedback here..."

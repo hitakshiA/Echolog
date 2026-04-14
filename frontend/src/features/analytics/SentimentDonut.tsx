@@ -29,7 +29,7 @@ export function SentimentDonut({ data }: SentimentDonutProps) {
 
   return (
     <Card>
-      <h3 className="mb-4 text-sm font-semibold text-text">Sentiment Distribution</h3>
+      <h3 className="mb-4 text-[11px] font-semibold uppercase tracking-wider text-text-muted">Sentiment Distribution</h3>
       <ResponsiveContainer width="100%" height={250}>
         <PieChart>
           <Pie

@@ -1,10 +1,10 @@
 import { useQuery } from '@tanstack/react-query'
 import type { AnalyticsSummary } from '../types'
-import { apiClient } from './client'
+import * as store from '../store'
 
 export function useAnalyticsSummary() {
   return useQuery({
     queryKey: ['analytics'],
-    queryFn: () => apiClient.get<AnalyticsSummary>('/analytics/summary'),
+    queryFn: () => store.getAnalyticsSummary() as AnalyticsSummary,
   })
 }

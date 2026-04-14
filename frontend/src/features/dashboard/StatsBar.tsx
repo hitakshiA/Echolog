@@ -8,16 +8,17 @@ interface StatsBarProps {
 interface StatCardProps {
   label: string
   count: number
-  color: string
-  borderColor: string
+  accentColor: string
+  dotColor: string
 }
 
-function StatCard({ label, count, color, borderColor }: StatCardProps) {
+function StatCard({ label, count, accentColor, dotColor }: StatCardProps) {
   return (
-    <div className={`flex items-center gap-4 rounded-xl border border-border bg-white p-5 ${borderColor}`} style={{ borderLeftWidth: '3px' }}>
+    <div className="flex items-center gap-3 rounded-xl border border-border bg-surface p-4 shadow-sm shadow-black/[0.03]">
+      <div className={`h-2 w-2 rounded-full ${dotColor}`} />
       <div>
-        <p className="text-sm text-text-muted">{label}</p>
-        <p className={`text-2xl font-bold ${color}`}>{count}</p>
+        <p className={`text-xl font-bold tracking-tight ${accentColor}`}>{count}</p>
+        <p className="text-[11px] font-medium uppercase tracking-wider text-text-muted">{label}</p>
       </div>
     </div>
   )
@@ -42,10 +43,10 @@ export function StatsBar({ data, isLoading }: StatsBarProps) {
 
   return (
     <div className="grid grid-cols-4 gap-4">
-      <StatCard label="Total Feedback" count={total} color="text-text" borderColor="!border-l-violet-500" />
-      <StatCard label="Pending Triage" count={pendingTriage} color="text-orange" borderColor="!border-l-orange" />
-      <StatCard label="In Progress" count={inProgress} color="text-blue" borderColor="!border-l-blue" />
-      <StatCard label="Resolved" count={resolved} color="text-green" borderColor="!border-l-green" />
+      <StatCard label="Total" count={total} accentColor="text-text" dotColor="bg-accent" />
+      <StatCard label="Pending" count={pendingTriage} accentColor="text-orange" dotColor="bg-orange" />
+      <StatCard label="In Progress" count={inProgress} accentColor="text-blue" dotColor="bg-blue" />
+      <StatCard label="Resolved" count={resolved} accentColor="text-green" dotColor="bg-green" />
     </div>
   )
 }

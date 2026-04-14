@@ -19,14 +19,15 @@ const categoryLabels: Record<string, string> = {
 export function AnalysisPanel({ analysis }: AnalysisPanelProps) {
   if (!analysis) {
     return (
-      <div className="rounded-2xl border-2 border-dashed border-border py-14 text-center">
-        <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-accent-light">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-accent">
-            <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </div>
+      <div className="rounded-2xl border border-dashed border-border py-14 text-center">
+        <svg className="mx-auto mb-4" width="48" height="48" viewBox="0 0 48 48" fill="none">
+          <circle cx="24" cy="24" r="22" stroke="#7C3AED" strokeWidth="1.5" strokeOpacity="0.12" />
+          <circle cx="24" cy="24" r="15" stroke="#7C3AED" strokeWidth="1.5" strokeOpacity="0.2" />
+          <circle cx="24" cy="24" r="8" stroke="#7C3AED" strokeWidth="1.5" strokeOpacity="0.35" />
+          <circle cx="24" cy="24" r="3" fill="#7C3AED" fillOpacity="0.5" />
+        </svg>
         <p className="text-sm font-semibold text-text">No analysis yet</p>
-        <p className="mt-1 text-xs text-text-muted">Click &quot;Analyze&quot; to get AI insights</p>
+        <p className="mt-1 text-[13px] text-text-muted">Click &quot;Analyze&quot; to get AI insights</p>
       </div>
     )
   }
@@ -34,7 +35,7 @@ export function AnalysisPanel({ analysis }: AnalysisPanelProps) {
   return (
     <Card className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
-        <h3 className="text-base font-semibold text-text">Analysis Results</h3>
+        <h3 className="font-display text-lg text-text" style={{ fontStyle: 'italic' }}>Analysis Results</h3>
         {!analysis.is_valid && <Badge variant="danger">Validation Issues</Badge>}
       </div>
 
@@ -98,7 +99,7 @@ export function AnalysisPanel({ analysis }: AnalysisPanelProps) {
       )}
 
       <div className="border-t border-border pt-4">
-        <p className="mb-3 text-xs font-medium text-text-muted">Metadata</p>
+        <p className="mb-3 text-[11px] font-semibold uppercase tracking-wider text-text-muted">Metadata</p>
         <div className="grid grid-cols-4 gap-3">
           {[
             { label: 'Model', value: analysis.model },
@@ -106,8 +107,8 @@ export function AnalysisPanel({ analysis }: AnalysisPanelProps) {
             { label: 'Latency', value: `${analysis.latency_ms}ms` },
             { label: 'Cost', value: `$${analysis.cost_cents.toFixed(4)}` },
           ].map((item) => (
-            <div key={item.label} className="rounded-lg bg-surface-alt px-3 py-2">
-              <div className="text-[10px] font-medium text-text-muted">{item.label}</div>
+            <div key={item.label} className="rounded-lg bg-bg px-3 py-2">
+              <div className="text-[10px] font-medium uppercase tracking-wide text-text-muted">{item.label}</div>
               <div className="text-xs font-semibold text-text">{item.value}</div>
             </div>
           ))}

@@ -10,7 +10,7 @@ export function AnalyticsPage() {
   if (isLoading) {
     return (
       <div className="flex flex-col gap-6">
-        <h1 className="text-2xl font-bold tracking-tight text-text">Analytics</h1>
+        <h1 className="font-display text-[1.75rem] text-text" style={{ fontStyle: 'italic' }}>Analytics</h1>
         <div className="grid grid-cols-3 gap-4">
           {[1, 2, 3].map((i) => (
             <Card key={i} className="h-24 animate-pulse !bg-border-light" />
@@ -28,7 +28,7 @@ export function AnalyticsPage() {
   if (!data) {
     return (
       <div className="flex flex-col gap-6">
-        <h1 className="text-2xl font-bold tracking-tight text-text">Analytics</h1>
+        <h1 className="font-display text-[1.75rem] text-text" style={{ fontStyle: 'italic' }}>Analytics</h1>
         <div className="flex flex-col items-center py-16 text-center">
           <div className="mb-3 text-4xl">📊</div>
           <p className="text-sm text-text-muted">No analytics data available yet.</p>
@@ -40,7 +40,7 @@ export function AnalyticsPage() {
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <h1 className="text-2xl font-bold tracking-tight text-text">Analytics</h1>
+        <h1 className="font-display text-[1.75rem] text-text" style={{ fontStyle: 'italic' }}>Analytics</h1>
         <p className="mt-0.5 text-sm text-text-muted">
           Overview across {data.total_feedback} feedback items
         </p>

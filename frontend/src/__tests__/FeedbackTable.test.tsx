@@ -68,7 +68,7 @@ describe('FeedbackTable', () => {
         <FeedbackTable items={[]} isLoading={false} />
       </MemoryRouter>
     )
-    expect(screen.getByText(/No feedback items found/)).toBeInTheDocument()
+    expect(screen.getByText(/No feedback yet/)).toBeInTheDocument()
   })
 
   it('renders rows for items', () => {

@@ -24,7 +24,7 @@ export function UrgencyTrend({ data }: UrgencyTrendProps) {
 
   return (
     <Card>
-      <h3 className="mb-4 text-sm font-semibold text-text">Urgency Trend</h3>
+      <h3 className="mb-4 text-[11px] font-semibold uppercase tracking-wider text-text-muted">Urgency Trend</h3>
       <ResponsiveContainer width="100%" height={250}>
         <LineChart data={data}>
           <CartesianGrid strokeDasharray="3 3" stroke="#E2E8F0" />

@@ -37,7 +37,7 @@ export function CategoryBar({ data }: CategoryBarProps) {
 
   return (
     <Card>
-      <h3 className="mb-4 text-sm font-semibold text-text">Category Breakdown</h3>
+      <h3 className="mb-4 text-[11px] font-semibold uppercase tracking-wider text-text-muted">Category Breakdown</h3>
       <ResponsiveContainer width="100%" height={250}>
         <BarChart data={chartData} layout="vertical" margin={{ left: 20 }}>
           <XAxis type="number" />

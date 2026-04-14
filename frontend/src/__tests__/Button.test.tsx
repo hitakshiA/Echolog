@@ -30,7 +30,7 @@ describe('Button', () => {
   it('renders secondary variant', () => {
     render(<Button variant="secondary">Secondary</Button>)
     const btn = screen.getByText('Secondary')
-    expect(btn.className).toContain('bg-white')
+    expect(btn.className).toContain('bg-surface')
   })
 
   it('renders danger variant', () => {

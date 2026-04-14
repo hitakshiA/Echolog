@@ -77,15 +77,12 @@ export function FeedbackDetailPage() {
               </Badge>
             )}
           </div>
-          <div className="text-xs text-text-secondary">
-            <span>Created: {new Date(item.created_at).toLocaleString()}</span>
-            <span className="ml-4">
-              Updated: {new Date(item.updated_at).toLocaleString()}
-            </span>
+          <div className="text-[11px] text-text-muted">
+            <span>{new Date(item.created_at).toLocaleString()}</span>
           </div>
         </div>
 
-        <p className="whitespace-pre-wrap text-sm text-text">{item.content}</p>
+        <p className="whitespace-pre-wrap text-[14px] leading-relaxed text-text-secondary">{item.content}</p>
       </Card>
 
       <ActionBar feedbackId={item.id} status={item.status} />

@@ -13,6 +13,7 @@ export interface FeedbackItem {
   status: FeedbackStatus
   note: string | null
   latest_analysis: AnalysisResponse | null
+  analysis_history?: AnalysisResponse[]
   created_at: string
   updated_at: string
 }
